@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plot
 
 #Einlesen der Daten
+#Reading in the data
 h = 10**(-5)
 t0 = 0
 T = 100
@@ -14,17 +15,21 @@ q = np.empty([4,int(T/h+1)])
 q[0] = np.sin(t)
 
 #Berechnen der Inversen Matrix 1/h*A+B
+# Calculating the inverse Matrix 1/h*A+B
 Inv = np.linalg.solve(1.0/h*A+B,np.identity(4))
 
 #Erstellen eines leeren Arrays zur Speicherung der Approximation der Lösung der DAE
+# Create an empty array to store the approximation of the solution of the DAE
 x = np.empty([4,int(T/h+1)])
 np.transpose(x)[0] = x0
 
 #Berechnen der Approximation der Lösung mittels impliziten Euler
+# Calculate the approximation of the solution using implicit Euler
 for i in range(1, int(T/h+1)):
     np.transpose(x)[i] = np.dot(Inv,np.transpose(q)[i]+1.0/h*np.dot(A,np.transpose(x)[i-1]))
 
 #Berechnen der exakten Lösung der DAE an den Stützstellen
+#Calculate the exact solution of the PCS at the vertices
 xsol = np.empty([4,int(T/h+1)])
 xsol[0] = np.sin(t)
 xsol[1] = -np.cos(t)
@@ -34,6 +39,7 @@ xsol[3] = np.cos(t)
 e = x-xsol
 
 #Plotten der komponentenweisen Fehler
+#Plotting the component-by-component defects
 plot.plot(t[np.arange(int(T/(10*h)))*10],e[0][np.arange(int(T/(10*h)))*10])
 plot.xlabel('t')
 plot.ylabel('e_1,n')
