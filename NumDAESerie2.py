@@ -10,22 +10,22 @@ x0 = np.transpose([0, -1, 0, 1])
 
 B = np.identity(4)
 A = np.array( ((0,0,0,0), (1,0,0,0), (0,1,0,0), (0,0,1,0)) )
-q = np.empty([4,T/h+1])
+q = np.empty([4,int(T/h+1)])
 q[0] = np.sin(t)
 
 #Berechnen der Inversen Matrix 1/h*A+B
 Inv = np.linalg.solve(1.0/h*A+B,np.identity(4))
 
-#Erstellen eines leeren Arrays zur Speicherung der Approximation der Lösung der DAE
-x = np.empty([4,T/h+1])
+#Erstellen eines leeren Arrays zur Speicherung der Approximation der LÃ¶sung der DAE
+x = np.empty([4,int(T/h+1)])
 np.transpose(x)[0] = x0
 
-#Berechnen der Approximation der Lösung mittels impliziten Euler
+#Berechnen der Approximation der LÃ¶sung mittels impliziten Euler
 for i in range(1, int(T/h+1)):
     np.transpose(x)[i] = np.dot(Inv,np.transpose(q)[i]+1.0/h*np.dot(A,np.transpose(x)[i-1]))
 
-#Berechnen der exakten Lösung der DAE an den Stützstellen
-xsol = np.empty([4,T/h+1])
+#Berechnen der exakten LÃ¶sung der DAE an den StÃ¼tzstellen
+xsol = np.empty([4,int(T/h+1)])
 xsol[0] = np.sin(t)
 xsol[1] = -np.cos(t)
 xsol[2] = -np.sin(t)
