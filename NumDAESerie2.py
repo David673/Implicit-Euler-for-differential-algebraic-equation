@@ -29,7 +29,7 @@ for i in range(1, int(T/h+1)):
     np.transpose(x)[i] = np.dot(Inv,np.transpose(q)[i]+1.0/h*np.dot(A,np.transpose(x)[i-1]))
 
 #Berechnen der exakten Lösung der DAE an den Stützstellen
-#Calculate the exact solution of the PCS at the vertices
+#Calculate the exact solution of the DAE at the Support points
 xsol = np.empty([4,int(T/h+1)])
 xsol[0] = np.sin(t)
 xsol[1] = -np.cos(t)
